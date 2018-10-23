@@ -97,11 +97,14 @@
 		A353FE4B217F3A7200C74578 /* CityPlaces */ = {
 			isa = PBXGroup;
 			children = (
+				A353FE7A217F3AB200C74578 /* Controllers */,
+				A353FE7B217F3ABF00C74578 /* Views */,
+				A353FE7C217F3AC500C74578 /* Models */,
+				A353FE80217F3AE600C74578 /* Protocols */,
+				A353FE7F217F3AD900C74578 /* Extensions */,
+				A353FE7D217F3ACB00C74578 /* Storyboards */,
+				A353FE7E217F3AD200C74578 /* Assets */,
 				A353FE4C217F3A7200C74578 /* AppDelegate.swift */,
-				A353FE4E217F3A7200C74578 /* ViewController.swift */,
-				A353FE50217F3A7200C74578 /* Main.storyboard */,
-				A353FE53217F3A7200C74578 /* Assets.xcassets */,
-				A353FE55217F3A7200C74578 /* LaunchScreen.storyboard */,
 				A353FE58217F3A7200C74578 /* Info.plist */,
 			);
 			path = CityPlaces;
@@ -123,6 +126,59 @@
 				A353FE6E217F3A7200C74578 /* Info.plist */,
 			);
 			path = CityPlacesUITests;
+			sourceTree = "<group>";
+		};
+		A353FE7A217F3AB200C74578 /* Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				A353FE4E217F3A7200C74578 /* ViewController.swift */,
+			);
+			path = Controllers;
+			sourceTree = "<group>";
+		};
+		A353FE7B217F3ABF00C74578 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		A353FE7C217F3AC500C74578 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		A353FE7D217F3ACB00C74578 /* Storyboards */ = {
+			isa = PBXGroup;
+			children = (
+				A353FE50217F3A7200C74578 /* Main.storyboard */,
+				A353FE55217F3A7200C74578 /* LaunchScreen.storyboard */,
+			);
+			path = Storyboards;
+			sourceTree = "<group>";
+		};
+		A353FE7E217F3AD200C74578 /* Assets */ = {
+			isa = PBXGroup;
+			children = (
+				A353FE53217F3A7200C74578 /* Assets.xcassets */,
+			);
+			path = Assets;
+			sourceTree = "<group>";
+		};
+		A353FE7F217F3AD900C74578 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Extensions;
+			sourceTree = "<group>";
+		};
+		A353FE80217F3AE600C74578 /* Protocols */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Protocols;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
