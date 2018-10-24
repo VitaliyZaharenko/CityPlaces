@@ -10,5 +10,10 @@ import Foundation
 
 struct Consts {
     
+    struct PlaceDetailView {
+        
+        static let xib = "PlaceDetailView"
+    }
     
+    static let placeAnnotationViewReuseId = "placeAnnotationViewId"
 }

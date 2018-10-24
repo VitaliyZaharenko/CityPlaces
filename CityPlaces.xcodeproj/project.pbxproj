@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		A353A57B2180949D0094B63F /* PlaceDetailView.xib in Resources */ = {isa = PBXBuildFile; fileRef = A353A57A2180949D0094B63F /* PlaceDetailView.xib */; };
+		A353A57D2180964A0094B63F /* PlaceDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A353A57C2180964A0094B63F /* PlaceDetailView.swift */; };
 		A353FE4D217F3A7200C74578 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A353FE4C217F3A7200C74578 /* AppDelegate.swift */; };
 		A353FE4F217F3A7200C74578 /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A353FE4E217F3A7200C74578 /* MapViewController.swift */; };
 		A353FE52217F3A7200C74578 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A353FE50217F3A7200C74578 /* Main.storyboard */; };
@@ -37,6 +39,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		A353A57A2180949D0094B63F /* PlaceDetailView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PlaceDetailView.xib; sourceTree = "<group>"; };
+		A353A57C2180964A0094B63F /* PlaceDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaceDetailView.swift; sourceTree = "<group>"; };
 		A353FE49217F3A7200C74578 /* CityPlaces.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CityPlaces.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A353FE4C217F3A7200C74578 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		A353FE4E217F3A7200C74578 /* MapViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapViewController.swift; sourceTree = "<group>"; };
@@ -80,6 +84,13 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		A353A579218092DB0094B63F /* MapAnnotations */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = MapAnnotations;
+			sourceTree = "<group>";
+		};
 		A353FE40217F3A7200C74578 = {
 			isa = PBXGroup;
 			children = (
@@ -146,6 +157,9 @@
 		A353FE7B217F3ABF00C74578 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				A353A579218092DB0094B63F /* MapAnnotations */,
+				A353A57A2180949D0094B63F /* PlaceDetailView.xib */,
+				A353A57C2180964A0094B63F /* PlaceDetailView.swift */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -308,6 +322,7 @@
 				A353FE57217F3A7200C74578 /* LaunchScreen.storyboard in Resources */,
 				A353FE54217F3A7200C74578 /* Assets.xcassets in Resources */,
 				A353FE52217F3A7200C74578 /* Main.storyboard in Resources */,
+				A353A57B2180949D0094B63F /* PlaceDetailView.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -333,6 +348,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				A353FE4F217F3A7200C74578 /* MapViewController.swift in Sources */,
+				A353A57D2180964A0094B63F /* PlaceDetailView.swift in Sources */,
 				F81A4E42217FB57F0093BFAD /* Consts.swift in Sources */,
 				A353FE4D217F3A7200C74578 /* AppDelegate.swift in Sources */,
 				A353FE84217F3FC700C74578 /* PlaceManager.swift in Sources */,

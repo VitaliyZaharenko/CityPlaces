@@ -13,7 +13,10 @@ class PlaceManager {
     static let shared = PlaceManager()
     
     func all() -> [Place] {
-        return [Place(lon: 30.984167, lat: 52.445278, name: nil, locationName: nil)]
+        return [Place(lon: 30.984167,
+                      lat: 52.445278,
+                      name: "GOMEL CITY",
+                      locationName: "GOMEL! GOMEL! GOMEL!")]
     }
     
 }

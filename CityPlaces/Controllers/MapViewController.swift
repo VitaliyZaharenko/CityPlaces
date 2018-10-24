@@ -88,7 +88,7 @@ extension MapViewController {
         
         let point = PlaceManager.shared.all().first!
         focusMap(on: point, withDistance: 100000)
-        addAnnotation(on: point, title: "GOMEL MARKER", subtitle: nil)
+        addAnnotation(on: point)
     }
     
     private func configureLocationManager() {
@@ -96,18 +96,9 @@ extension MapViewController {
         locationManager.desiredAccuracy = kCLLocationAccuracyBest
         
         let status = CLLocationManager.authorizationStatus()
+        updateAutorization(status: status)
         
         
-        switch status {
-        case .notDetermined:
-            locationManager.requestWhenInUseAuthorization()
-        case .authorizedAlways, .authorizedWhenInUse:
-            enableUserLocationButton(enable: true)
-            mapView.showsUserLocation = true
-        case .denied, .restricted:
-            enableUserLocationButton(enable: false)
-            mapView.showsUserLocation = false
-        }
         
     }
     
@@ -131,12 +122,8 @@ extension MapViewController {
     }
     
     
-    private func addAnnotation(on point: Place, title: String?, subtitle: String?){
-        let annotation = MKPointAnnotation()
-        annotation.coordinate = CLLocation(latitude: point.lat, longitude: point.lon).coordinate
-        annotation.title = title
-        annotation.subtitle = subtitle
-        mapView.addAnnotation(annotation)
+    private func addAnnotation(on point: Place){
+        mapView.addAnnotation(point)
     }
     
     private func enableUserLocationButton(enable: Bool){
@@ -148,6 +135,19 @@ extension MapViewController {
         let locationRegion = MKCoordinateRegionMakeWithDistance(coordinate, regionRadius, regionRadius)
         mapView.setRegion(locationRegion, animated: true)
     }
+    
+    private func updateAutorization(status: CLAuthorizationStatus){
+        switch status {
+        case .notDetermined:
+            locationManager.requestWhenInUseAuthorization()
+        case .authorizedAlways, .authorizedWhenInUse:
+            enableUserLocationButton(enable: true)
+            mapView.showsUserLocation = true
+        case .denied, .restricted:
+            enableUserLocationButton(enable: false)
+            mapView.showsUserLocation = false
+        }
+    }
 }
 
 
@@ -156,7 +156,25 @@ extension MapViewController {
 extension MapViewController: MKMapViewDelegate {
     
     func mapView(_ mapView: MKMapView, didSelect view: MKAnnotationView) {
-        print(view.annotation?.title)
+        let alertController = UIAlertController(title: "Info", message: nil, preferredStyle: .alert)
+    }
+    
+    func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
+        
+        if annotation is MKUserLocation {
+            return nil
+        }
+        var annotationView = mapView.dequeueReusableAnnotationView(withIdentifier: Consts.placeAnnotationViewReuseId)
+        
+        if annotationView == nil {
+            annotationView = MKAnnotationView(annotation: annotation, reuseIdentifier: Consts.placeAnnotationViewReuseId)
+            annotationView?.canShowCallout = true
+        } else {
+            annotationView?.annotation = annotation
+        }
+        let image = UIImage(named: "forest")
+        annotationView!.image = image
+        return annotationView
     }
 }
 
@@ -166,17 +184,12 @@ extension MapViewController: MKMapViewDelegate {
 extension MapViewController: CLLocationManagerDelegate {
     
     func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
-        if status == .denied || status == .restricted || status == .notDetermined {
-            enableUserLocationButton(enable: false)
-        } else {
-            enableUserLocationButton(enable: true)
-        }
+        updateAutorization(status: status)
     }
     
     func mapView(_ mapView: MKMapView, didUpdate userLocation: MKUserLocation) {
         self.userLocation = userLocation.coordinate
     }
-    
     
     
 }
