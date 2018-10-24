@@ -16,6 +16,7 @@
 		A353FE6D217F3A7200C74578 /* CityPlacesUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A353FE6C217F3A7200C74578 /* CityPlacesUITests.swift */; };
 		A353FE82217F3F9400C74578 /* Point.swift in Sources */ = {isa = PBXBuildFile; fileRef = A353FE81217F3F9400C74578 /* Point.swift */; };
 		A353FE84217F3FC700C74578 /* PointManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A353FE83217F3FC700C74578 /* PointManager.swift */; };
+		F81A4E42217FB57F0093BFAD /* Consts.swift in Sources */ = {isa = PBXBuildFile; fileRef = F81A4E41217FB57F0093BFAD /* Consts.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -51,6 +52,7 @@
 		A353FE6E217F3A7200C74578 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		A353FE81217F3F9400C74578 /* Point.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Point.swift; sourceTree = "<group>"; };
 		A353FE83217F3FC700C74578 /* PointManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PointManager.swift; sourceTree = "<group>"; };
+		F81A4E41217FB57F0093BFAD /* Consts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Consts.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -101,6 +103,7 @@
 		A353FE4B217F3A7200C74578 /* CityPlaces */ = {
 			isa = PBXGroup;
 			children = (
+				F81A4E40217FB5680093BFAD /* Constants */,
 				A353FE7A217F3AB200C74578 /* Controllers */,
 				A353FE7B217F3ABF00C74578 /* Views */,
 				A353FE7C217F3AC500C74578 /* Models */,
@@ -144,7 +147,7 @@
 			isa = PBXGroup;
 			children = (
 			);
-			path = Views;
+			name = Views;
 			sourceTree = "<group>";
 		};
 		A353FE7C217F3AC500C74578 /* Models */ = {
@@ -177,14 +180,22 @@
 			isa = PBXGroup;
 			children = (
 			);
-			path = Extensions;
+			name = Extensions;
 			sourceTree = "<group>";
 		};
 		A353FE80217F3AE600C74578 /* Protocols */ = {
 			isa = PBXGroup;
 			children = (
 			);
-			path = Protocols;
+			name = Protocols;
+			sourceTree = "<group>";
+		};
+		F81A4E40217FB5680093BFAD /* Constants */ = {
+			isa = PBXGroup;
+			children = (
+				F81A4E41217FB57F0093BFAD /* Consts.swift */,
+			);
+			path = Constants;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -322,6 +333,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				A353FE4F217F3A7200C74578 /* MapViewController.swift in Sources */,
+				F81A4E42217FB57F0093BFAD /* Consts.swift in Sources */,
 				A353FE4D217F3A7200C74578 /* AppDelegate.swift in Sources */,
 				A353FE84217F3FC700C74578 /* PointManager.swift in Sources */,
 				A353FE82217F3F9400C74578 /* Point.swift in Sources */,

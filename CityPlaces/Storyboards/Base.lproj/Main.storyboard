@@ -19,20 +19,33 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="4jG-qH-IFs">
-                                <rect key="frame" x="0.0" y="20" width="375" height="647"/>
+                                <rect key="frame" x="0.0" y="20" width="375" height="598"/>
                             </mapView>
+                            <tabBar contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Ept-hQ-krF">
+                                <rect key="frame" x="0.0" y="618" width="375" height="49"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                <items>
+                                    <tabBarItem title="Standart" id="cMp-Jq-RSO"/>
+                                    <tabBarItem tag="1" title="Satellite" id="dHw-F8-PCC"/>
+                                    <tabBarItem tag="2" title="Hybrid" id="yZz-oM-1id"/>
+                                </items>
+                            </tabBar>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstItem="4jG-qH-IFs" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" id="7ha-NR-WHY"/>
+                            <constraint firstItem="Ept-hQ-krF" firstAttribute="trailing" secondItem="6Tk-OE-BBY" secondAttribute="trailing" id="ASG-zU-dfc"/>
                             <constraint firstItem="4jG-qH-IFs" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="Qcp-s2-JuR"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="Ept-hQ-krF" secondAttribute="bottom" id="RmR-be-gBZ"/>
+                            <constraint firstItem="Ept-hQ-krF" firstAttribute="top" secondItem="4jG-qH-IFs" secondAttribute="bottom" id="a7C-gt-vFW"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="4jG-qH-IFs" secondAttribute="trailing" id="fTJ-bz-YG4"/>
-                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="4jG-qH-IFs" secondAttribute="bottom" id="uTU-4z-tcF"/>
+                            <constraint firstItem="Ept-hQ-krF" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="pZh-Zc-DdL"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
                     <connections>
                         <outlet property="mapView" destination="4jG-qH-IFs" id="RGe-j2-RMe"/>
+                        <outlet property="tabBar" destination="Ept-hQ-krF" id="7q4-2P-L3q"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
