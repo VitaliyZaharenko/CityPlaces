@@ -10,6 +10,12 @@ import UIKit
 import MapKit
 
 
+fileprivate struct Const {
+    
+    static let userLocationRegionExpandRadius: CLLocationDistance = 10000
+}
+
+
 fileprivate enum MapType: Int {
     
     case standart
@@ -22,7 +28,9 @@ class MapViewController: UIViewController {
     //MARK: - Views
     
     @IBOutlet weak var mapView: MKMapView!
-    @IBOutlet weak var tabBar: UITabBar!
+    
+    @IBOutlet weak var userLocationToolbarItem: UIBarButtonItem!
+    
     
     //MARK: - Properties
     
@@ -32,34 +40,75 @@ class MapViewController: UIViewController {
         }
     }
     
+    private var locationManager = CLLocationManager()
+    private var userLocation: CLLocationCoordinate2D?
+    
     //MARK: - Lifecycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        configureTabBar()
         configureMapView()
+        configureLocationManager()
+        
     }
     
+    //MARK: - Actions
+    
+    @IBAction func setMapStandartType(_ sender: UIBarButtonItem) {
+        mapType = .standart
+    }
+    
+    @IBAction func setMapSatelliteType(_ sender: UIBarButtonItem) {
+        mapType = .satellite
+    }
+    
+    @IBAction func setMapHybridType(_ sender: UIBarButtonItem) {
+        mapType = .hybrid
+    }
+    
+    @IBAction func showUserLocation(_ sender: UIBarButtonItem) {
+        
+        if let userLocation = userLocation {
+            moveTo(coordinate: userLocation)
+        }
+    }
     
 }
 
-//MARK: Private Help Methods
+
+//MARK: - Private Help Methods
 
 extension MapViewController {
     
-    private func configureTabBar(){
-        tabBar.delegate = self
-        tabBar.selectedItem = tabBar.items!.first
-    }
     
     private func configureMapView(){
         
         mapView.delegate = self
         
-        let point = PointManager.shared.all().first!
+        let point = PlaceManager.shared.all().first!
         focusMap(on: point, withDistance: 100000)
         addAnnotation(on: point, title: "GOMEL MARKER", subtitle: nil)
+    }
+    
+    private func configureLocationManager() {
+        locationManager.delegate = self
+        locationManager.desiredAccuracy = kCLLocationAccuracyBest
+        
+        let status = CLLocationManager.authorizationStatus()
+        
+        
+        switch status {
+        case .notDetermined:
+            locationManager.requestWhenInUseAuthorization()
+        case .authorizedAlways, .authorizedWhenInUse:
+            enableUserLocationButton(enable: true)
+            mapView.showsUserLocation = true
+        case .denied, .restricted:
+            enableUserLocationButton(enable: false)
+            mapView.showsUserLocation = false
+        }
+        
     }
     
     private func setMapType(){
@@ -75,40 +124,32 @@ extension MapViewController {
     }
     
     
-    private func focusMap(on point: Point, withDistance: Double) {
+    private func focusMap(on point: Place, withDistance: Double) {
         let focusLocation = CLLocation(latitude: point.lat, longitude: point.lon)
         let locationRegion = MKCoordinateRegionMakeWithDistance(focusLocation.coordinate, withDistance, withDistance)
         mapView.setRegion(locationRegion, animated: true)
     }
     
     
-    private func addAnnotation(on point: Point, title: String?, subtitle: String?){
+    private func addAnnotation(on point: Place, title: String?, subtitle: String?){
         let annotation = MKPointAnnotation()
         annotation.coordinate = CLLocation(latitude: point.lat, longitude: point.lon).coordinate
         annotation.title = title
         annotation.subtitle = subtitle
         mapView.addAnnotation(annotation)
     }
-}
-
-
-//MARK: - UITabBarDelegate
-
-extension MapViewController: UITabBarDelegate {
     
-    func tabBar(_ tabBar: UITabBar, didSelect item: UITabBarItem) {
-        switch item.tag {
-        case Consts.StandartBarItem.tag:
-            mapType = .standart
-        case Consts.SatelliteBarItem.tag:
-            mapType = .satellite
-        case Consts.HybridBarItem.tag:
-            mapType = .hybrid
-        default:
-            fatalError("Unknown TabBarItem tag = \(item.tag)")
-        }
+    private func enableUserLocationButton(enable: Bool){
+        userLocationToolbarItem.isEnabled = enable
+    }
+    
+    private func moveTo(coordinate: CLLocationCoordinate2D, regionRadius: CLLocationDistance = Const.userLocationRegionExpandRadius){
+        
+        let locationRegion = MKCoordinateRegionMakeWithDistance(coordinate, regionRadius, regionRadius)
+        mapView.setRegion(locationRegion, animated: true)
     }
 }
+
 
 //MARK: - MKMapViewDelegate
 
@@ -119,3 +160,23 @@ extension MapViewController: MKMapViewDelegate {
     }
 }
 
+
+//MARK: - CLLocationManagerDelegate
+
+extension MapViewController: CLLocationManagerDelegate {
+    
+    func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
+        if status == .denied || status == .restricted || status == .notDetermined {
+            enableUserLocationButton(enable: false)
+        } else {
+            enableUserLocationButton(enable: true)
+        }
+    }
+    
+    func mapView(_ mapView: MKMapView, didUpdate userLocation: MKUserLocation) {
+        self.userLocation = userLocation.coordinate
+    }
+    
+    
+    
+}

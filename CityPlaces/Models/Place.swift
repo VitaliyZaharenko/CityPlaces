@@ -8,8 +8,11 @@
 
 import Foundation
 
-struct Point {
+struct Place {
     
     var lon: Double
     var lat: Double
+    
+    var name: String?
+    var locationName: String?
 }

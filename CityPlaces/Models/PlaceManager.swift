@@ -8,12 +8,12 @@
 
 import Foundation
 
-class PointManager {
+class PlaceManager {
     
-    static let shared = PointManager()
+    static let shared = PlaceManager()
     
-    func all() -> [Point] {
-        return [Point(lon: 30.984167, lat: 52.445278)]
+    func all() -> [Place] {
+        return [Place(lon: 30.984167, lat: 52.445278, name: nil, locationName: nil)]
     }
     
 }
