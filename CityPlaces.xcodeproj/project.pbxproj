@@ -84,13 +84,6 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		A353A579218092DB0094B63F /* MapAnnotations */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			name = MapAnnotations;
-			sourceTree = "<group>";
-		};
 		A353FE40217F3A7200C74578 = {
 			isa = PBXGroup;
 			children = (
@@ -157,7 +150,6 @@
 		A353FE7B217F3ABF00C74578 /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				A353A579218092DB0094B63F /* MapAnnotations */,
 				A353A57A2180949D0094B63F /* PlaceDetailView.xib */,
 				A353A57C2180964A0094B63F /* PlaceDetailView.swift */,
 			);

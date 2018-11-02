@@ -13,6 +13,8 @@ import MapKit
 fileprivate struct Const {
     
     static let userLocationRegionExpandRadius: CLLocationDistance = 10000
+    static let annotationViewImageName = "forest"
+    static let detailsAlertCancel = "Cancel"
 }
 
 
@@ -28,7 +30,6 @@ class MapViewController: UIViewController {
     //MARK: - Views
     
     @IBOutlet weak var mapView: MKMapView!
-    
     @IBOutlet weak var userLocationToolbarItem: UIBarButtonItem!
     
     
@@ -73,7 +74,6 @@ class MapViewController: UIViewController {
             moveTo(coordinate: userLocation)
         }
     }
-    
 }
 
 
@@ -87,8 +87,9 @@ extension MapViewController {
         mapView.delegate = self
         
         let point = PlaceManager.shared.all().first!
+        
         focusMap(on: point, withDistance: 100000)
-        addAnnotation(on: point)
+        mapView.addAnnotation(point)
     }
     
     private func configureLocationManager() {
@@ -97,9 +98,6 @@ extension MapViewController {
         
         let status = CLLocationManager.authorizationStatus()
         updateAutorization(status: status)
-        
-        
-        
     }
     
     private func setMapType(){
@@ -122,16 +120,11 @@ extension MapViewController {
     }
     
     
-    private func addAnnotation(on point: Place){
-        mapView.addAnnotation(point)
-    }
-    
     private func enableUserLocationButton(enable: Bool){
         userLocationToolbarItem.isEnabled = enable
     }
     
     private func moveTo(coordinate: CLLocationCoordinate2D, regionRadius: CLLocationDistance = Const.userLocationRegionExpandRadius){
-        
         let locationRegion = MKCoordinateRegionMakeWithDistance(coordinate, regionRadius, regionRadius)
         mapView.setRegion(locationRegion, animated: true)
     }
@@ -148,6 +141,33 @@ extension MapViewController {
             mapView.showsUserLocation = false
         }
     }
+    
+    
+    private func annotationView(_ mapView: MKMapView, for annotation: Place) -> MKAnnotationView {
+        var annotationView = mapView.dequeueReusableAnnotationView(withIdentifier: Consts.placeAnnotationViewReuseId)
+        if annotationView == nil {
+            annotationView = MKAnnotationView(annotation: annotation, reuseIdentifier: Consts.placeAnnotationViewReuseId)
+            annotationView?.canShowCallout = true
+            annotationView?.rightCalloutAccessoryView = UIButton(type: .detailDisclosure)
+        } else {
+            annotationView?.annotation = annotation
+        }
+        let image = UIImage(named: Const.annotationViewImageName)
+        annotationView!.image = image
+        annotationView!.centerOffset = CGPoint(x: 0, y: -annotationView!.frame.size.height / 2)
+        return annotationView!
+    }
+    
+    private func showDetails(about place: Place){
+        let alertController = UIAlertController(title: place.name, message: place.locationName, preferredStyle: .alert)
+        let placeDetailsView = PlaceDetailView(frame: alertController.view.frame)
+        alertController.view.addSubview(placeDetailsView)
+        let cancelAction = UIAlertAction(title: Const.detailsAlertCancel, style: .cancel, handler: { _ in
+            alertController.dismiss(animated: true, completion: nil)
+        })
+        alertController.addAction(cancelAction)
+        show(alertController, sender: self)
+    }
 }
 
 
@@ -155,26 +175,19 @@ extension MapViewController {
 
 extension MapViewController: MKMapViewDelegate {
     
-    func mapView(_ mapView: MKMapView, didSelect view: MKAnnotationView) {
-        let alertController = UIAlertController(title: "Info", message: nil, preferredStyle: .alert)
-    }
-    
     func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
         
-        if annotation is MKUserLocation {
-            return nil
+        if annotation is Place {
+            return annotationView(mapView, for: annotation as! Place)
         }
-        var annotationView = mapView.dequeueReusableAnnotationView(withIdentifier: Consts.placeAnnotationViewReuseId)
-        
-        if annotationView == nil {
-            annotationView = MKAnnotationView(annotation: annotation, reuseIdentifier: Consts.placeAnnotationViewReuseId)
-            annotationView?.canShowCallout = true
-        } else {
-            annotationView?.annotation = annotation
+        return nil
+    }
+    
+    func mapView(_ mapView: MKMapView, annotationView view: MKAnnotationView, calloutAccessoryControlTapped control: UIControl) {
+        guard let place = view.annotation as? Place else {
+            return
         }
-        let image = UIImage(named: "forest")
-        annotationView!.image = image
-        return annotationView
+        showDetails(about: place)
     }
 }
 
@@ -190,6 +203,4 @@ extension MapViewController: CLLocationManagerDelegate {
     func mapView(_ mapView: MKMapView, didUpdate userLocation: MKUserLocation) {
         self.userLocation = userLocation.coordinate
     }
-    
-    
 }
