@@ -31,6 +31,7 @@ class MapViewController: UIViewController {
     
     @IBOutlet weak var mapView: MKMapView!
     @IBOutlet weak var userLocationToolbarItem: UIBarButtonItem!
+    @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
     
     
     //MARK: - Properties
@@ -49,6 +50,7 @@ class MapViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        activityIndicator.isHidden = true
         configureMapView()
         configureLocationManager()
         
@@ -74,6 +76,24 @@ class MapViewController: UIViewController {
             moveTo(coordinate: userLocation)
         }
     }
+    
+    @IBAction func loadDataFromFile(_ sender: UIButton) {
+        sender.isEnabled = false
+        activityIndicator.isHidden = false
+        activityIndicator.startAnimating()
+        DispatchQueue.global(qos: .default).async {
+            let places = PlaceManager.ParsePlaces()
+            if let places = places {
+                DispatchQueue.main.async {
+                    self.activityIndicator.stopAnimating()
+                    self.activityIndicator.isHidden = true
+                    self.show(places: places)
+                }
+            }
+        }
+    }
+    
+    
 }
 
 
@@ -119,6 +139,10 @@ extension MapViewController {
         mapView.setRegion(locationRegion, animated: true)
     }
     
+    private func focusMap(on points: [Place]) {
+        MKMapRect(origin: <#T##MKMapPoint#>, size: <#T##MKMapSize#>)
+    }
+    
     
     private func enableUserLocationButton(enable: Bool){
         userLocationToolbarItem.isEnabled = enable
@@ -160,13 +184,15 @@ extension MapViewController {
     
     private func showDetails(about place: Place){
         let alertController = UIAlertController(title: place.name, message: place.locationName, preferredStyle: .alert)
-        let placeDetailsView = PlaceDetailView(frame: alertController.view.frame)
-        alertController.view.addSubview(placeDetailsView)
         let cancelAction = UIAlertAction(title: Const.detailsAlertCancel, style: .cancel, handler: { _ in
             alertController.dismiss(animated: true, completion: nil)
         })
         alertController.addAction(cancelAction)
         show(alertController, sender: self)
+    }
+    
+    private func show(places: [Place]){
+        mapView.addAnnotations(places)
     }
 }
 

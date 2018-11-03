@@ -16,4 +16,6 @@ struct Consts {
     }
     
     static let placeAnnotationViewReuseId = "placeAnnotationViewId"
+    
+    static let publicArt = "PublicArt"
 }

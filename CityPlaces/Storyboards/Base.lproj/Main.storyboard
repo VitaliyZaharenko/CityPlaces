@@ -49,20 +49,39 @@
                                     </barButtonItem>
                                 </items>
                             </toolbar>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="4Se-rg-TCz">
+                                <rect key="frame" x="20" y="40" width="137" height="30"/>
+                                <state key="normal" title="Load Data From File"/>
+                                <connections>
+                                    <action selector="loadDataFromFile:" destination="BYZ-38-t0r" eventType="touchUpInside" id="WtJ-bw-UlK"/>
+                                </connections>
+                            </button>
+                            <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="eMg-b1-zw3">
+                                <rect key="frame" x="177" y="323.5" width="20" height="20"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="20" id="cJR-j4-205"/>
+                                    <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="20" id="t2c-TS-FoU"/>
+                                </constraints>
+                            </activityIndicatorView>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
+                            <constraint firstItem="4Se-rg-TCz" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="20" id="5qr-48-oBa"/>
                             <constraint firstItem="MAG-Gv-iaG" firstAttribute="top" secondItem="4jG-qH-IFs" secondAttribute="bottom" id="6lI-Du-Hfy"/>
                             <constraint firstItem="4jG-qH-IFs" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" id="7ha-NR-WHY"/>
                             <constraint firstItem="MAG-Gv-iaG" firstAttribute="bottom" secondItem="6Tk-OE-BBY" secondAttribute="bottom" id="IzR-s8-hlx"/>
                             <constraint firstItem="MAG-Gv-iaG" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="L5N-zS-zmb"/>
                             <constraint firstItem="4jG-qH-IFs" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="Qcp-s2-JuR"/>
+                            <constraint firstItem="eMg-b1-zw3" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="W0Z-Q1-nxQ"/>
+                            <constraint firstItem="eMg-b1-zw3" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" id="a2c-G8-6LK"/>
+                            <constraint firstItem="4Se-rg-TCz" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="20" id="ehz-I7-xW4"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="4jG-qH-IFs" secondAttribute="trailing" id="fTJ-bz-YG4"/>
                             <constraint firstItem="MAG-Gv-iaG" firstAttribute="trailing" secondItem="6Tk-OE-BBY" secondAttribute="trailing" id="vPf-YT-K5Z"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
                     <connections>
+                        <outlet property="activityIndicator" destination="eMg-b1-zw3" id="fZW-6n-vL1"/>
                         <outlet property="mapView" destination="4jG-qH-IFs" id="RGe-j2-RMe"/>
                         <outlet property="userLocationToolbarItem" destination="bSf-cR-FqT" id="3AZ-Vp-GkU"/>
                     </connections>

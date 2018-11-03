@@ -18,6 +18,9 @@
 		A353FE6D217F3A7200C74578 /* CityPlacesUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A353FE6C217F3A7200C74578 /* CityPlacesUITests.swift */; };
 		A353FE82217F3F9400C74578 /* Place.swift in Sources */ = {isa = PBXBuildFile; fileRef = A353FE81217F3F9400C74578 /* Place.swift */; };
 		A353FE84217F3FC700C74578 /* PlaceManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A353FE83217F3FC700C74578 /* PlaceManager.swift */; };
+		F805D14D218CF4A9001E7F85 /* PlaceParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = F805D14C218CF4A9001E7F85 /* PlaceParser.swift */; };
+		F805D14F218D2750001E7F85 /* Parser.swift in Sources */ = {isa = PBXBuildFile; fileRef = F805D14E218D2750001E7F85 /* Parser.swift */; };
+		F80C034D218CA260000F65F8 /* PublicArt.json in Resources */ = {isa = PBXBuildFile; fileRef = F80C034C218CA260000F65F8 /* PublicArt.json */; };
 		F81A4E42217FB57F0093BFAD /* Consts.swift in Sources */ = {isa = PBXBuildFile; fileRef = F81A4E41217FB57F0093BFAD /* Consts.swift */; };
 /* End PBXBuildFile section */
 
@@ -56,6 +59,9 @@
 		A353FE6E217F3A7200C74578 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		A353FE81217F3F9400C74578 /* Place.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Place.swift; sourceTree = "<group>"; };
 		A353FE83217F3FC700C74578 /* PlaceManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaceManager.swift; sourceTree = "<group>"; };
+		F805D14C218CF4A9001E7F85 /* PlaceParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaceParser.swift; sourceTree = "<group>"; };
+		F805D14E218D2750001E7F85 /* Parser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Parser.swift; sourceTree = "<group>"; };
+		F80C034C218CA260000F65F8 /* PublicArt.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = PublicArt.json; sourceTree = "<group>"; };
 		F81A4E41217FB57F0093BFAD /* Consts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Consts.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -115,6 +121,7 @@
 				A353FE7F217F3AD900C74578 /* Extensions */,
 				A353FE7D217F3ACB00C74578 /* Storyboards */,
 				A353FE7E217F3AD200C74578 /* Assets */,
+				F80C034B218CA003000F65F8 /* StaticData */,
 				A353FE4C217F3A7200C74578 /* AppDelegate.swift */,
 				A353FE58217F3A7200C74578 /* Info.plist */,
 			);
@@ -159,6 +166,7 @@
 		A353FE7C217F3AC500C74578 /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				F805D150218D2758001E7F85 /* Parsers */,
 				A353FE81217F3F9400C74578 /* Place.swift */,
 				A353FE83217F3FC700C74578 /* PlaceManager.swift */,
 			);
@@ -192,8 +200,25 @@
 		A353FE80217F3AE600C74578 /* Protocols */ = {
 			isa = PBXGroup;
 			children = (
+				F805D14E218D2750001E7F85 /* Parser.swift */,
 			);
 			name = Protocols;
+			sourceTree = "<group>";
+		};
+		F805D150218D2758001E7F85 /* Parsers */ = {
+			isa = PBXGroup;
+			children = (
+				F805D14C218CF4A9001E7F85 /* PlaceParser.swift */,
+			);
+			path = Parsers;
+			sourceTree = "<group>";
+		};
+		F80C034B218CA003000F65F8 /* StaticData */ = {
+			isa = PBXGroup;
+			children = (
+				F80C034C218CA260000F65F8 /* PublicArt.json */,
+			);
+			path = StaticData;
 			sourceTree = "<group>";
 		};
 		F81A4E40217FB5680093BFAD /* Constants */ = {
@@ -315,6 +340,7 @@
 				A353FE54217F3A7200C74578 /* Assets.xcassets in Resources */,
 				A353FE52217F3A7200C74578 /* Main.storyboard in Resources */,
 				A353A57B2180949D0094B63F /* PlaceDetailView.xib in Resources */,
+				F80C034D218CA260000F65F8 /* PublicArt.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -343,6 +369,8 @@
 				A353A57D2180964A0094B63F /* PlaceDetailView.swift in Sources */,
 				F81A4E42217FB57F0093BFAD /* Consts.swift in Sources */,
 				A353FE4D217F3A7200C74578 /* AppDelegate.swift in Sources */,
+				F805D14F218D2750001E7F85 /* Parser.swift in Sources */,
+				F805D14D218CF4A9001E7F85 /* PlaceParser.swift in Sources */,
 				A353FE84217F3FC700C74578 /* PlaceManager.swift in Sources */,
 				A353FE82217F3F9400C74578 /* Place.swift in Sources */,
 			);
