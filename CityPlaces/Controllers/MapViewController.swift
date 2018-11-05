@@ -88,31 +88,29 @@ class MapViewController: UIViewController {
                     self.activityIndicator.stopAnimating()
                     self.activityIndicator.isHidden = true
                     self.show(places: places)
+                    self.focusMap(on: places)
                 }
             }
         }
     }
-    
-    
 }
 
 
 //MARK: - Private Help Methods
 
-extension MapViewController {
+private extension MapViewController {
     
     
-    private func configureMapView(){
+    func configureMapView(){
         
         mapView.delegate = self
         
         let point = PlaceManager.shared.all().first!
-        
         focusMap(on: point, withDistance: 100000)
         mapView.addAnnotation(point)
     }
     
-    private func configureLocationManager() {
+    func configureLocationManager() {
         locationManager.delegate = self
         locationManager.desiredAccuracy = kCLLocationAccuracyBest
         
@@ -120,7 +118,7 @@ extension MapViewController {
         updateAutorization(status: status)
     }
     
-    private func setMapType(){
+    func setMapType(){
         print(mapType)
         switch mapType {
         case .standart:
@@ -133,27 +131,45 @@ extension MapViewController {
     }
     
     
-    private func focusMap(on point: Place, withDistance: Double) {
+    func focusMap(on point: Place, withDistance: Double) {
         let focusLocation = CLLocation(latitude: point.lat, longitude: point.lon)
         let locationRegion = MKCoordinateRegionMakeWithDistance(focusLocation.coordinate, withDistance, withDistance)
         mapView.setRegion(locationRegion, animated: true)
     }
     
-    private func focusMap(on points: [Place]) {
-        MKMapRect(origin: <#T##MKMapPoint#>, size: <#T##MKMapSize#>)
+    func focusMap(on points: [Place]) {
+        
+        if points.isEmpty{
+            return
+        }
+        let cooridnateTuples = points.map({($0.lon, $0.lat)})
+        let (centerLon, centerLat): (Double, Double) = {
+            let coordsSum = cooridnateTuples.reduce((0.0, 0.0), {
+                return ($0.0 + $1.0, $0.1 + $1.1)})
+            return (coordsSum.0 / Double(points.count), coordsSum.1 / Double(points.count))
+        }()
+        
+        let (lonArray, latArray) = (cooridnateTuples.map({$0.0}), cooridnateTuples.map({$0.1}))
+        let (minLon, maxLon) = (lonArray.min()!, lonArray.max()!)
+        let (minLat, maxLat) = (latArray.min()!, latArray.max()!)
+        let maxDistance = CLLocation(latitude: minLat, longitude: minLon).distance(from:
+            CLLocation(latitude: maxLat, longitude: maxLon))
+        let distance = (maxDistance / 2) * 3
+        let focusRegion = MKCoordinateRegionMakeWithDistance(CLLocation(latitude: centerLat, longitude: centerLon).coordinate, distance, distance)
+        mapView.setRegion(focusRegion, animated: true)
     }
     
     
-    private func enableUserLocationButton(enable: Bool){
+    func enableUserLocationButton(enable: Bool){
         userLocationToolbarItem.isEnabled = enable
     }
     
-    private func moveTo(coordinate: CLLocationCoordinate2D, regionRadius: CLLocationDistance = Const.userLocationRegionExpandRadius){
+    func moveTo(coordinate: CLLocationCoordinate2D, regionRadius: CLLocationDistance = Const.userLocationRegionExpandRadius){
         let locationRegion = MKCoordinateRegionMakeWithDistance(coordinate, regionRadius, regionRadius)
         mapView.setRegion(locationRegion, animated: true)
     }
     
-    private func updateAutorization(status: CLAuthorizationStatus){
+    func updateAutorization(status: CLAuthorizationStatus){
         switch status {
         case .notDetermined:
             locationManager.requestWhenInUseAuthorization()
@@ -167,7 +183,7 @@ extension MapViewController {
     }
     
     
-    private func annotationView(_ mapView: MKMapView, for annotation: Place) -> MKAnnotationView {
+    func annotationView(_ mapView: MKMapView, for annotation: Place) -> MKAnnotationView {
         var annotationView = mapView.dequeueReusableAnnotationView(withIdentifier: Consts.placeAnnotationViewReuseId)
         if annotationView == nil {
             annotationView = MKAnnotationView(annotation: annotation, reuseIdentifier: Consts.placeAnnotationViewReuseId)
@@ -182,7 +198,7 @@ extension MapViewController {
         return annotationView!
     }
     
-    private func showDetails(about place: Place){
+    func showDetails(about place: Place){
         let alertController = UIAlertController(title: place.name, message: place.locationName, preferredStyle: .alert)
         let cancelAction = UIAlertAction(title: Const.detailsAlertCancel, style: .cancel, handler: { _ in
             alertController.dismiss(animated: true, completion: nil)
@@ -191,7 +207,7 @@ extension MapViewController {
         show(alertController, sender: self)
     }
     
-    private func show(places: [Place]){
+    func show(places: [Place]){
         mapView.addAnnotations(places)
     }
 }
