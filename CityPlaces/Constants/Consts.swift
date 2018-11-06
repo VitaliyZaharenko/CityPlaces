@@ -10,12 +10,6 @@ import Foundation
 
 struct Consts {
     
-    struct PlaceDetailView {
-        
-        static let xib = "PlaceDetailView"
-    }
-    
     static let placeAnnotationViewReuseId = "placeAnnotationViewId"
-    
-    static let publicArt = "PublicArt"
+    static let publicArtFileNamePlistKey = "PublicArtFilename"
 }

@@ -15,15 +15,10 @@ fileprivate struct Const {
     static let userLocationRegionExpandRadius: CLLocationDistance = 10000
     static let annotationViewImageName = "forest"
     static let detailsAlertCancel = "Cancel"
+    static let errorAlertControllerTitle = "Error"
+    static let okAction = "Ok"
 }
 
-
-fileprivate enum MapType: Int {
-    
-    case standart
-    case satellite
-    case hybrid
-}
 
 class MapViewController: UIViewController {
     
@@ -36,9 +31,9 @@ class MapViewController: UIViewController {
     
     //MARK: - Properties
     
-    private var mapType: MapType = .standart {
+    private var mapType: MKMapType = .standard {
         didSet {
-            setMapType()
+            mapView.mapType = mapType
         }
     }
     
@@ -59,7 +54,7 @@ class MapViewController: UIViewController {
     //MARK: - Actions
     
     @IBAction func setMapStandartType(_ sender: UIBarButtonItem) {
-        mapType = .standart
+        mapType = .standard
     }
     
     @IBAction func setMapSatelliteType(_ sender: UIBarButtonItem) {
@@ -82,13 +77,19 @@ class MapViewController: UIViewController {
         activityIndicator.isHidden = false
         activityIndicator.startAnimating()
         DispatchQueue.global(qos: .default).async {
-            let places = PlaceManager.ParsePlaces()
-            if let places = places {
+            do {
+                let places = try PlaceManager.ParsePlaces()
                 DispatchQueue.main.async {
                     self.activityIndicator.stopAnimating()
                     self.activityIndicator.isHidden = true
                     self.show(places: places)
                     self.focusMap(on: places)
+                }
+            } catch {
+                DispatchQueue.main.async {
+                    self.activityIndicator.stopAnimating()
+                    self.activityIndicator.isHidden = true
+                    self.show(error: error)
                 }
             }
         }
@@ -118,18 +119,6 @@ private extension MapViewController {
         updateAutorization(status: status)
     }
     
-    func setMapType(){
-        print(mapType)
-        switch mapType {
-        case .standart:
-            mapView.mapType = .standard
-        case .satellite:
-            mapView.mapType = .satellite
-        case .hybrid:
-            mapView.mapType = .hybrid
-        }
-    }
-    
     
     func focusMap(on point: Place, withDistance: Double) {
         let focusLocation = CLLocation(latitude: point.lat, longitude: point.lon)
@@ -144,8 +133,8 @@ private extension MapViewController {
         }
         let cooridnateTuples = points.map({($0.lon, $0.lat)})
         let (centerLon, centerLat): (Double, Double) = {
-            let coordsSum = cooridnateTuples.reduce((0.0, 0.0), {
-                return ($0.0 + $1.0, $0.1 + $1.1)})
+            let coordsSum = cooridnateTuples.reduce((0.0, 0.0), { (result, coordToAdd) in
+                return (result.0 + coordToAdd.0, result.1 + coordToAdd.1)})
             return (coordsSum.0 / Double(points.count), coordsSum.1 / Double(points.count))
         }()
         
@@ -209,6 +198,24 @@ private extension MapViewController {
     
     func show(places: [Place]){
         mapView.addAnnotations(places)
+    }
+    
+    func show(error: Error){
+        switch error {
+        case ParsingError.multivalueParsingError(let message):
+            showAlertWith(title: Const.errorAlertControllerTitle, message: message)
+        default:
+            return
+        }
+    }
+    
+    func showAlertWith(title: String, message: String){
+        let alertController = UIAlertController(title: title, message: message, preferredStyle: .alert)
+        let okAction = UIAlertAction(title: Const.detailsAlertCancel, style: .default, handler: { _ in
+            alertController.dismiss(animated: true, completion: nil)
+        })
+        alertController.addAction(okAction)
+        show(alertController, sender: self)
     }
 }
 

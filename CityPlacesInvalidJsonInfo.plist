@@ -3,7 +3,7 @@
 <plist version="1.0">
 <dict>
 	<key>PublicArtFilename</key>
-	<string>PublicArt</string>
+	<string>PublicArtInvalid</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string>We need to know you position to enable showing your location</string>
 	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>

@@ -21,11 +21,17 @@ class PlaceManager {
     
     
     
-    static func ParsePlaces() -> [Place]? {
-        let url = Bundle.main.url(forResource: Consts.publicArt, withExtension: "json", subdirectory: nil)
+    static func ParsePlaces() throws -> [Place] {
+        guard let plistUrl = Bundle.main.url(forResource: "Info", withExtension: "plist") else {
+            fatalError("Plist not found")
+        }
+        guard let publicArtFileName = NSDictionary(contentsOf: plistUrl)?.value(forKey: Consts.publicArtFileNamePlistKey) as? String else {
+            fatalError("Error when trying to get filename from plist file")
+        }
+        let url = Bundle.main.url(forResource: publicArtFileName, withExtension: "json", subdirectory: nil)
         let data = try? Data(contentsOf: url!)
         let parser = PlaceParser(from: data!)
-        let places = try? parser.parse()
+        let places = try parser.parse()
         return places
     }
     
